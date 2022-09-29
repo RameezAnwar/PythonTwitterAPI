@@ -53,17 +53,17 @@ df.to_csv( 'tweets.csv')
 ###########################################################################################
 
 #getting tweets from specific user
-user = 'veritasium'
-limit = 300
+user = 'BarackObama'
+limit = 10
 
-#tweepy method of bypassing twitter 200 limit
-tweets = tweepy.Cursor(api.user_timeline,  screen_name = user, 
-count = 200, tweet_mode = 'extended').items(limit)
+#tweepy method of bypassing twitter 200 limit, set limit above 200 if using this version
+#user_tweets = tweepy.Cursor(api.user_timeline,  screen_name = user, 
+#count = 200, tweet_mode = 'extended').items(limit)
 
 #without using limit bypass
-#tweets = api.user_timeline(screen_name = user,count = limit, tweet_mode = 'extended' )
+user_tweets = api.user_timeline(screen_name = user,count = limit, tweet_mode = 'extended' )
 
-#for tweet in tweets:
+#for tweet in user_tweets:
 #    print( tweet.full_text)
 
 
@@ -71,7 +71,7 @@ count = 200, tweet_mode = 'extended').items(limit)
 user_columns = ['User', 'Tweet']
 user_data = []
 
-for tweet in tweets:
+for tweet in user_tweets:
     user_data.append([tweet.user.screen_name, tweet.full_text])
 
 user_df = pd.DataFrame(user_data, columns = user_columns)
@@ -83,3 +83,27 @@ user_df.to_csv( 'user_tweets.csv')
 #####################################################################################
 
 
+#getting tweets off keyword
+searching = 'God of War'
+limit = 300
+
+#to bypass set limit above 100
+keyword_tweets = tweepy.Cursor(api.search_tweets, q = searching, 
+count = 100, tweet_mode = 'extended').items(limit)
+
+#without bypass
+#keyword_tweets = api.search_tweets(q = searching, count = limit, tweet_mode = 'extended' )
+
+#for tweet in keyword_tweets:
+#    print( tweet.full_text)
+
+keyword_columns = ['User', 'Tweet']
+keyword_data = []
+
+for tweet in keyword_tweets:
+    keyword_data.append([tweet.user.screen_name, tweet.full_text])
+
+keyword_df = pd.DataFrame(keyword_data, columns = keyword_columns)
+
+#print(keyword_df)
+keyword_df.to_csv( 'keyword_tweets.csv')
