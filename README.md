@@ -1,5 +1,6 @@
 # PythonTwitterAPI
 A project using Twitter API to collect and analyze data from tweets
+and doing visualizations 
 
 If you want to run this project add a config.ini file containing your twitter api information in the following format
 
